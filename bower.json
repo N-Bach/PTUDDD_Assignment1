@@ -1,0 +1,21 @@
+{
+  "name": "Assignment 1",
+  "description": "for HCMUT's Mobile Application System Development",
+  "authors": [
+    "Bach Do <nguyenbach2810@gmail.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "^3.3.6",
+    "font-awesome": "font-awsome#^4.5.0",
+    "flat-ui": "^2.2.2",
+    "sweetalert": "^1.1.3"
+  }
+}

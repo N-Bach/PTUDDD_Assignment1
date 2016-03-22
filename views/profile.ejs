@@ -1,0 +1,74 @@
+<!doctype html>
+<html>
+<head>
+    <title>Node Authentication</title>
+    <link rel="stylesheet" href="/lib/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.css">
+
+    <!-- AngularJs -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular-resource.min.js">
+    </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular-route.min.js">
+   </script>
+    
+    <link rel="stylesheet" href="./lib/flat-ui/dist/css/flat-ui.min.css">
+    <link rel="stylesheet" href="./lib/sweetalert/dist/sweetalert.css">
+    <!-- <base href="/"></base> -->
+</head>
+<body ng-app="myApp">
+
+    <nav class="navbar navbar-inverse navbar-embossed" role="navigation">
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse-01">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/profile#/">YuYo</a>
+          </div>
+          <div class="collapse navbar-collapse" id="navbar-collapse-01">
+            <ul class="nav navbar-nav">
+              <li><a href="#/upload">Upload</a></li>
+              <li><a href="#/manage">Manage Picture</a></li>
+              <li><a href="#/map">Maps</a></li>              
+              <li><a href="#/aboutus">About us</a></li>
+            </ul>
+            
+            <ul class="nav navbar-nav navbar-right">
+              <p class="navbar-text">Sign in as <a href="#/edit"><%= user.local.email %></a></p>         
+              <li><a href="/logout">Log out</a></li>
+            </ul>
+          
+          </div><!-- /.navbar-collapse -->
+        </div> <!-- /.container -->
+      </nav><!-- /navbar --> 
+
+    <!-- <div class="container">
+        <div class="page-header text-center">
+            <h1><span class="fa fa-anchor"></span> Profile Page</h1>
+        </div>
+    </div> -->
+
+    <div ng-view></div>
+    
+    <script src="/lib/jquery/dist/jquery.js"></script>
+    <script src="/lib/bootstrap/dist/js/bootstrap.js"></script>
+
+    <script src="./lib/sweetalert/dist/sweetalert.min.js"></script>
+
+    <script src="./main.js"></script>
+    
+    <script src="./controllers/aboutus.js"></script>
+    <script src="./controllers/edit.js"></script>
+    <script src="./controllers/home.js"></script>
+    <script src="./controllers/manage.js"></script>
+    <script src="./controllers/map.js"></script>
+    <script src="./controllers/upload.js"></script>
+    <script src="./services/user.js"></script>
+
+
+</body>
+</html>
