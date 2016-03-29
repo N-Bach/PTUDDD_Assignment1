@@ -1,5 +1,24 @@
 <div class="container">
   <div class="page-header text-center">
-    <h1><i class="fa fa-map"></i> Map Page</h1>
+    <h1><i class="fa fa-map"></i> Your Location</h1>
   </div>
 </div>
+
+<div class="row">        
+<div class="col col-md-8 col-md-offset-2">
+    <div id="map_canvas" ui-map="model.myMap" class="map-canvas" ui-options="mapOptions">
+    </div>
+    <div ng-repeat="marker in myMarkers" ui-map-marker="myMarkers[$index]">
+    </div>
+</div>
+</div>
+<!-- <div class="row" ng-show="showResult()">
+   Latitude: {{lat}} <br />
+   Longitude: {{lng}} <br />
+   Accuracy: {{accuracy}}
+</div>
+<div class="row" ng-show="!showResult()">
+    Error : {{error}}
+    Error Code: {{error.code}}
+</div>
+ -->
