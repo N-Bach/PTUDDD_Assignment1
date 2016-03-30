@@ -1,35 +1,57 @@
-<!-- <div class="container">
-  <div class="page-header text-center">
-    <h1><i class="fa fa-facebook"></i> Detail page</h1>
-    <h4>{{hello}}</h4>
-  </div>
-</div> -->
+<div class="container">  
+    <h4 class="text-center"><i class="fa fa-users"></i> User List</h4>
+    <div class="col col-md-4">
+        <input type="text" class="form-control" placeholder="Search filter..." ng-model="userFilter">
+        <p><b>Total:</b> {{data.length}} User(s)</p>
+    </div>
+</div>
 
-<!-- <div class="container">
-    <table ng-table="tableParams" class="table" show-filter="true">
-        <tr ng-repeat="user in data">
-            <td title="'Name'" filter="{ name: 'text'}" sortable="'Name'">
-                {{user.name}}</td>
-            <td title="'Age'" filter="{ age: 'number'}" sortable="'Age'">
-                {{user.age}}</td>
-        </tr>
-    </table>
-</div> -->
-<div class="container">
-    <table ng-table="tableParams" class="table" show-filter="false">
-        <tr ng-repeat="user in data">
-            <td title="'First Name'" class="text-center">
-                {{user.bio.firstName}}</td>
-            <td title="'Last Name'" class="text-center">
-                {{user.bio.lastName}}</td>
-            <td title="'Age'" class="text-center">
-                {{user.bio.age}}</td>
-            <td title="'Email'" class="text-center">
-                {{user.local.email}}</td>
-            <td title="'Phone Number'" class="text-center">
-                {{user.bio.phoneNumber}}</td>
-            <td title="'University'" class="text-center">
-                {{user.bio.university}}</td>
-        </tr>
+<div class="container">    
+    <table class="table table-hover table-striped">
+        <thead>
+            <tr>
+                <th ng-click="clickSort('firstName')">
+                    First Name
+                    <span ng-show="sortType == 'firstName' && !sortReverse" class="fa fa-caret-down"></span>
+                    <span ng-show="sortType == 'firstName' && sortReverse" class="fa fa-caret-up"></span>
+                </th>
+                <th ng-click="clickSort('lastName')">
+                    Last Name
+                    <span ng-show="sortType == 'lastName' && !sortReverse" class="fa fa-caret-down"></span>
+                    <span ng-show="sortType == 'lastName' && sortReverse" class="fa fa-caret-up"></span>
+                </th>
+                <th ng-click="clickSort('age')">
+                    Age
+                    <span ng-show="sortType == 'age' && !sortReverse" class="fa fa-caret-down"></span>
+                    <span ng-show="sortType == 'age' && sortReverse" class="fa fa-caret-up"></span>
+                </th>
+                <th ng-click="clickSort('email')">
+                    Email
+                    <span ng-show="sortType == 'email' && !sortReverse" class="fa fa-caret-down"></span>
+                    <span ng-show="sortType == 'email' && sortReverse" class="fa fa-caret-up"></span>
+                </th>
+                <th ng-click="clickSort('phoneNumber')">
+                    Phone Number
+                    <span ng-show="sortType == 'phoneNumber' && !sortReverse" class="fa fa-caret-down"></span>
+                    <span ng-show="sortType == 'phoneNumber' && sortReverse" class="fa fa-caret-up"></span>
+                </th>
+                <th ng-click="clickSort('university')">
+                    University
+                    <span ng-show="sortType == 'university' && !sortReverse" class="fa fa-caret-down"></span>
+                    <span ng-show="sortType == 'university' && sortReverse" class="fa fa-caret-up"></span>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="user in data | orderBy:sortType:sortReverse | filter: userFilter"
+            ng-class="{success: checkCurrent(user.local.email)}">
+                <td>{{user.bio.firstName}}</td>
+                <td>{{user.bio.lastName}}</td>
+                <td>{{user.bio.age}}</td>
+                <td>{{user.local.email}}</td>
+                <td>{{user.bio.phoneNumber}}</td>
+                <td>{{user.bio.university}}</td>
+            </tr>
+        </tbody>
     </table>
 </div>

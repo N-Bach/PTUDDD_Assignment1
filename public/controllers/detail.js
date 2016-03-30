@@ -1,23 +1,31 @@
-function DetailCtrl($scope, $http, User, NgTableParams) {
+function DetailCtrl($scope, $http, $location, User) {
 
-    $scope.hello = 'What\'s up bitches!!!';
+    User.get(function(data) {
+        $scope.user = data;
+    });
+
+    $scope.userFilter = '';
+    $scope.sortType = '';
+    $scope.sortReverse = false;
+
+    $scope.clickSort = function(type) {
+        $scope.sortReverse = !$scope.sortReverse;
+        $scope.sortType = type;
+    };
 
     $http.get('/api/users/all').then(function(data) {
-        $scope.data = data.data;
-        console.log($scope.data2);  
-    });
+        $scope.data = data.data;                
+    },function(err) {
+        sweetAlert("Oops...", "Cannot get User list", "error");
+        $location.path('/profile');
+    });    
     
-    
-    $scope.tableParams = new NgTableParams({
-        page: 1, 
-        count: 10         
-    }, { 
-        dataset: $scope.data
-    });
-    
+    $scope.checkCurrent = function(email) {
+        return $scope.user.local.email == email;
+    }
 }
 
-DetailCtrl.$inject = ['$scope', '$http', 'User', 'NgTableParams'];
+DetailCtrl.$inject = ['$scope', '$http', '$location', 'User'];
 
 angular.module('myApp')
     .controller('DetailCtrl', DetailCtrl);
