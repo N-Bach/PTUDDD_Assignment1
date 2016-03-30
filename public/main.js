@@ -1,4 +1,4 @@
-var app = angular.module('myApp', ['ngRoute', 'ngResource', 'ui.event', 'ui.map']);
+var app = angular.module('myApp', ['ngRoute', 'ngResource', 'ui.event', 'ui.map', 'ngTable']);
 
 app.config(['$locationProvider','$routeProvider', 
   function($locationProvider, $routeProvider) {
@@ -25,6 +25,10 @@ app.config(['$locationProvider','$routeProvider',
         .when('/map', {
             templateUrl: 'partials/map.html',
             controller: 'MapCtrl'
+        })      
+        .when('/detail', {
+            templateUrl: 'partials/detail.html',
+            controller: 'DetailCtrl'
         })      
         .when('/edit', {
             templateUrl: 'partials/edit.html',

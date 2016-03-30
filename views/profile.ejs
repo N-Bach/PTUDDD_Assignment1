@@ -16,6 +16,7 @@
     
     <link rel="stylesheet" href="./lib/flat-ui/dist/css/flat-ui.min.css">
     <link rel="stylesheet" href="./lib/sweetalert/dist/sweetalert.css">
+    <link rel="stylesheet" href="/lib/ng-table/dist/ng-table.min.css">
     <!-- <base href="/"></base> -->
 </head>
 <body ng-app="myApp">
@@ -35,6 +36,7 @@
             <ul class="nav navbar-nav">
               <li><a href="#/upload">Upload</a></li>
               <li><a href="#/manage">Manage Picture</a></li>
+              <li><a href="#/detail">Detail</a></li>
               <li><a href="#/map">Maps</a></li>              
               <li><a href="#/aboutus">About us</a></li>
             </ul>
@@ -63,6 +65,7 @@
     
     <script type="text/javascript" src="./lib/angular-ui-event/dist/event.min.js"></script>
     <script type="text/javascript" src="./lib/angular-ui-map/ui-map.min.js"></script>    
+    <script type="text/javascript" src="./lib/ng-table/dist/ng-table.js"></script>    
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA7SiSHbKjnEp53OzMglaMc2B6WfLrA-sA"
     async defer></script>
 
@@ -74,8 +77,9 @@
     <script src="./controllers/manage.js"></script>
     <script src="./controllers/map.js"></script>
     <script src="./controllers/upload.js"></script>
+    <script src="./controllers/detail.js"></script>
     <script src="./services/user.js"></script>
-
+    
 
     <!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA7SiSHbKjnEp53OzMglaMc2B6WfLrA-sA"
     async defer></script> -->
