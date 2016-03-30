@@ -15,7 +15,7 @@
           <span class="label label-default">Email</span>
         </div>
         <div class="col-md-10">{{user.local.email}}  </div>
-      </div>
+      </div>      
     </div> <!-- col-sm-4 -->
 
     <div class="col-sm-8">
@@ -74,8 +74,9 @@
 
         </div>
       
-      <div class="col-sm-2 col-sm-offset-2">
-        <button class="btn btn-primary btn-lg" ng-click="update()">Update</button>
+      <div class="col-sm-5 col-sm-offset-2">
+        <button class="btn btn-primary btn-sm" ng-click="updateUser()">Update</button>
+        <button class="btn btn-danger btn-sm" ng-click="deleteUser()">Delete</button>
       </div>
 
     </div> <!-- col-sm-8 -->

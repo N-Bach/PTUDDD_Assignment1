@@ -17,7 +17,7 @@ app.config(['$locationProvider','$routeProvider',
         .when('/manage', {
             templateUrl: 'partials/manage.html',
             controller: 'ManageCtrl'
-        })
+        })        
         .when('/aboutus', {
             templateUrl: 'partials/aboutus.html',
             controller: 'AboutUsCtrl'

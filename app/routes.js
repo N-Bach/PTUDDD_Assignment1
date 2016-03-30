@@ -2,6 +2,21 @@ var express = require('express');
 var app = express.Router();
 var passport = require('passport');
 
+var multer = require('multer');
+
+var storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, './uploads')
+    },
+    filename: function (req, file, cb) {
+        cb(null, file.originalname)
+  }
+});
+var upload = multer({ 
+    storage: storage    
+});
+
+
 var User = require('./models/user');
 
 app.get('/', function(req, res) {
@@ -58,6 +73,39 @@ app.put('/profile/current', isLoggedIn, function(req, res, next) {
     });
 
 });
+
+app.post('/pictures/upload', upload.single('myFile'), function(req, res) {
+    //console.log(req.file);
+    console.log(">>>>Upload success");
+    res.redirect('/profile#/upload');
+    // res.end();
+});
+
+app.get('/api/users/all', function(req, res, next) {
+    User.find({}, function(err, users) {
+        if (err) return next(err);
+        res.json(users);
+    });
+});
+
+app.delete('/api/users/:id', function(req, res, next) {
+    User.remove({_id: req.params.id}, function(err, user) {
+        if (err) return next(err);
+        // res.redirect('/logout');
+        // res.redirect('/profile#/edit');
+        res.json(user);
+    });
+});
+
+app.get('/api/users/:id', function(req, res, next) {
+    User.findById(req.params.id, function(err, user) {
+        if (err) return next(err);
+        res.json(user);
+    });
+});
+
+
+
 
 app.get('/logout', function(req, res) {
     req.logout();
