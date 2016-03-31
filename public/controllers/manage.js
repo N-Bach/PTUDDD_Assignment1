@@ -1,11 +1,14 @@
 function ManageCtrl($scope, User) {
 
-    $scope.hello = 'What\'s up bitches!!!';    
+    $scope.uploaded = false;    
 
     User.get(function(data) {
         $scope.user = data;
         //console.log($scope.user.image);
-        $scope.img = $scope.user.image;
+        $scope.images = $scope.user.image;
+        console.log($scope.images.length);
+        $scope.uploaded = $scope.images.length > 0 ? true : false;
+        console.log($scope.uploaded);
     });   
 
 }

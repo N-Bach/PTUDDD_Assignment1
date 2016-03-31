@@ -1,5 +1,7 @@
 function UploadCtrl($scope, $http, User) {
 
+    $scope.uploading = false;
+
     User.get(function(data) {
         $scope.user = data;
     });    
@@ -7,6 +9,7 @@ function UploadCtrl($scope, $http, User) {
     $scope.myFile = {};
 
     $scope.upload = function() {
+        $scope.uploading = true;
         $http({
             headers: {'Authorization': 'Client-ID ae6e3c4095f9247'},
             url: '  https://api.imgur.com/3/upload',
@@ -23,6 +26,7 @@ function UploadCtrl($scope, $http, User) {
                 method: 'PUT',
                 data: { url: url} 
             }).then(function(data) {
+                $scope.uploading = false;
                 swal("Oh YEAH!!!!","Picture Uploaded", "success");            
             }, function(err) {
                 sweetAlert("Oops...", "Something went wrong!", "error");

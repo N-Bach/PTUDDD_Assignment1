@@ -90,9 +90,7 @@ app.get('/api/users/all', function(req, res, next) {
 
 app.delete('/api/users/:id', function(req, res, next) {
     User.remove({_id: req.params.id}, function(err, user) {
-        if (err) return next(err);
-        // res.redirect('/logout');
-        // res.redirect('/profile#/edit');
+        if (err) return next(err);        
         res.json(user);
     });
 });
@@ -108,10 +106,10 @@ app.get('api/users/:id/', function(req, res, next) {
 
 app.put('/api/users/:id', function(req, res, next) {
     var url = req.body.url;
-    //console.log(url);
     User.findById(req.params.id, function(err, user) {
         if (err) return next(err);
-        user.image = url;
+        //user.image = url;
+        user.image.push(url);
         user.save(function(err, newuser) {
             if (err) return next(err);
             res.json(newuser);            

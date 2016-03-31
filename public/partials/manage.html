@@ -2,11 +2,14 @@
   <div class="text-center">
     <h4><i class="fa fa-picture-o"></i> Manage Your Pictures</h4>    
   </div>
-    <div class="row">
-        <div class="col col-md-5">
-            <img ng-src="{{img}}" alt="Description" />        
+    <div class="row">        
+        <div class="col col-md-3" ng-repeat="img in images" ng-show="{{uploaded}}">
+            <img ng-src="{{img}}" alt="Description" class="img-rounded img-responsive" />        
         </div>
     </div> 
+    <div class="row" >
+        <div ng-show="!uploaded" class="text-center">You haven't upload any <a href="#/upload">picture</a></div>     
+    </div>
 </div>
 
 
