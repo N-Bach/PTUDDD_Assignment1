@@ -4,13 +4,7 @@ function HomeCtrl($scope, User) {
 
     User.get(function(data) {
         $scope.user = data;
-    });    
-        
-
-    /*console.log(">>>>>>>>>>>>>>");
-    console.log($scope.user);*/
-    
-
+    });        
 }
 
 HomeCtrl.$inject = ['$scope', 'User'];

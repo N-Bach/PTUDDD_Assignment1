@@ -97,10 +97,25 @@ app.delete('/api/users/:id', function(req, res, next) {
     });
 });
 
-app.get('/api/users/:id', function(req, res, next) {
+app.get('api/users/:id/', function(req, res, next) {
     User.findById(req.params.id, function(err, user) {
         if (err) return next(err);
-        res.json(user);
+        cosole.log(req.params.url);
+        user.image = req.params.url;
+        res.json(req.params.url);
+    });
+});
+
+app.put('/api/users/:id', function(req, res, next) {
+    var url = req.body.url;
+    //console.log(url);
+    User.findById(req.params.id, function(err, user) {
+        if (err) return next(err);
+        user.image = url;
+        user.save(function(err, newuser) {
+            if (err) return next(err);
+            res.json(newuser);            
+        });
     });
 });
 

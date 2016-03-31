@@ -1,6 +1,4 @@
-function AboutUsCtrl($scope, User) {
-
-    $scope.hello = 'What\'s up bitches!!!';
+function AboutUsCtrl($scope, User) {    
     
 }
 

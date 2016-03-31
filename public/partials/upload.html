@@ -3,11 +3,12 @@
     <h1><i class="fa fa-camera-retro"></i> Upload Page</h1>
   </div>
 </div>
-<div class="container">
-    <h4>Upload picture</h4>
-    <form action="/pictures/upload" method="POST" enctype="multipart/form-data">
-      Select an image to upload:
-      <input type="file" name="myFile"> 
-      <input type="submit" value="Upload Image">
-    </form>
+<div class="container">    
+    <div class="row">
+        <div class="col col-md-6">
+            <input class="btn btn-info" type="file" ng-model="myFile" accept="image/*" base-sixty-four-input>
+            <button ng-click="upload()" class="btn btn-danger">Submit</button>        
+        </div>
+    </div>
+    
 </div>

@@ -28,6 +28,10 @@ var userSchema = mongoose.Schema({
             type: String,
             default: '090111111'
         }
+    },
+    image: {
+        type: String,
+        default: ''
     }
 
 });

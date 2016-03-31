@@ -21,6 +21,7 @@
     "angular-ui-event": "^1.0.0",
     "bower": "*",
     "install": "^1.0.4",
-    "ng-table": "^0.8.3"
+    "ng-table": "^0.8.3",
+    "angular-base64-upload": "^0.1.19"
   }
 }

@@ -1,13 +1,5 @@
-
 function MapCtrl($scope, User) {
-
-    $scope.hello = 'What\'s up bitches!!!'; 
-
-    /*$scope.mapOptions = {
-      center: new google.maps.LatLng(35.784, -78.670),
-      zoom: 15,
-      mapTypeId: google.maps.MapTypeId.ROADMAP
-    };   */
+    
 
     $scope.lat = "0";
     $scope.lng = "0";
