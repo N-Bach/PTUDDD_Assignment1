@@ -129,7 +129,8 @@ app.post('/mobile/login', passport.authenticate('local-login'), function(req, re
     res.end(JSON.stringify(response));
 });*/
 app.post('/mobile/signup', function(req, res, next) {
-    User.findOne({ 'local.email': email }, function(err, user) {
+    var signupUser = req.body;
+    User.findOne({ 'local.email': signupUser.email }, function(err, user) {
             if (err) 
                 return next(err);
             if (user) {
@@ -137,8 +138,8 @@ app.post('/mobile/signup', function(req, res, next) {
             } else {
                 var newUser = new User();
 
-                newUser.local.email = email;
-                newUser.local.password = newUser.generateHash(password);
+                newUser.local.email = signupUser.email;
+                newUser.local.password = newUser.generateHash(signupUser.password);
 
                 newUser.save(function(err) {
                     if (err)
