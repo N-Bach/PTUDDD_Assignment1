@@ -147,7 +147,7 @@ app.post('/mobile/signup', function(req, res, next) {
                 });
             }
 
-        }
+        })
 });
 
 
