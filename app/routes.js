@@ -117,7 +117,9 @@ app.put('/api/users/:id', function(req, res, next) {
     });
 });
 
-
+app.post('/mobile/login', passport.authenticate('local-login'), function(req, res, next) {
+    res.json(req.user);
+});
 
 
 app.get('/logout', function(req, res) {
