@@ -121,12 +121,33 @@ app.post('/mobile/login', passport.authenticate('local-login'), function(req, re
     res.json(req.user);
 });
 
-app.post('/mobile/signup', passport.authenticate('local-signup'), function(req, res, next) {
+/*app.post('/mobile/signup', passport.authenticate('local-signup'), function(req, res, next) {
     var response = {
         status  : 200,
         success : 'Successfully Sign up'
     }
     res.end(JSON.stringify(response));
+});*/
+app.post('/mobile/signup', function(req, res, next) {
+    User.findOne({ 'local.email': email }, function(err, user) {
+            if (err) 
+                return next(err);
+            if (user) {
+                 res.status(500).send('Email already Exist');
+            } else {
+                var newUser = new User();
+
+                newUser.local.email = email;
+                newUser.local.password = newUser.generateHash(password);
+
+                newUser.save(function(err) {
+                    if (err)
+                       throw err;
+                     res.status(200).send('Sign up Successfully');
+                });
+            }
+
+        }
 });
 
 
