@@ -121,6 +121,14 @@ app.post('/mobile/login', passport.authenticate('local-login'), function(req, re
     res.json(req.user);
 });
 
+app.post('/mobile/signup', passport.authenticate('local-signup'), function(req, res, next) {
+    var response = {
+        status  : 200,
+        success : 'Successfully Sign up'
+    }
+    res.end(JSON.stringify(response));
+});
+
 
 app.get('/logout', function(req, res) {
     req.logout();
