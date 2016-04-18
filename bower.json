@@ -1,5 +1,5 @@
 {
-  "name": "Assignment 1",
+  "name": "assignment-1",
   "description": "for HCMUT's Mobile Application System Development",
   "authors": [
     "Bach Do <nguyenbach2810@gmail.com>"
@@ -26,5 +26,8 @@
     "angular": "^1.5.4",
     "angular-resource": "^1.5.3",
     "angular-route": "^1.5.3"
+  },
+  "resolutions": {
+    "angular": "1.5.3"
   }
 }
