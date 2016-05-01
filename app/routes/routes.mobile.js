@@ -2,6 +2,7 @@ var express = require('express');
 var app = express.Router();
 var passport = require('passport');
 var User = require('../models/user');
+var Card = require('../models/card');
 
 app.post('/login', passport.authenticate('local-login'), function(req, res, next) {
     res.json(req.user);
@@ -35,11 +36,58 @@ app.get('/logout', function(req, res, next) {
     res.status(200).send('Log Out Successfully');
 });
 
+app.put('/user', isLoggedIn,  function(req, res, next) {
+    req.user.update(req.body,{}, function(err, user) {
+        if (err) return next(err);
+        res.json(user);
+    });
+});
+
+app.param('card', function(req, res, next, id) {
+    var query = Card.findById(id).populate('create_by');
+
+    query.exec(function(err, card) {
+        if (err) { return next(err); }
+        if (!card) { return next(new Error('can\'t find card')); }
+        
+        req.card = card;
+        return next();     
+    });
+});
+
+app.post('/cards', function(req, res, next) {
+    var cardInfo = req.body;    
+    var newCard = new Card(cardInfo);   
+    newCard.save(function(err, card) {
+        if (err) return next(err);        
+        res.json(card);
+    });
+});
+
+app.put('/cards/:card/upvote', function(req, res, next) {    
+    req.card.upvote(function(err) {
+        if (err) return next(err);
+        res.json(req.card);
+    });
+});
+
+app.get('/cards', function(req, res, next) {
+    var query = Card.find()
+        .limit(10)
+        .populate('create_by')
+        .sort('-createdAt');
+
+    query.exec(function(err, cards) {
+        if (err) return next(err);
+        res.json(cards);
+    });
+});
+
 function isLoggedIn(req, res, next) {
     if (req.isAuthenticated())
         return next();
 
-    res.redirect('/');
+    res.send('Your shall not pass');
 };
 
 module.exports = app;
