@@ -1,23 +1,7 @@
 var express = require('express');
 var app = express.Router();
 var passport = require('passport');
-
-var multer = require('multer');
-
-var storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        cb(null, './uploads')
-    },
-    filename: function (req, file, cb) {
-        cb(null, file.originalname)
-  }
-});
-var upload = multer({ 
-    storage: storage    
-});
-
-
-var User = require('./models/user');
+var User = require('../models/user');
 
 app.get('/', function(req, res) {
     res.render('index.ejs');
@@ -74,13 +58,6 @@ app.put('/profile/current', isLoggedIn, function(req, res, next) {
 
 });
 
-app.post('/pictures/upload', upload.single('myFile'), function(req, res) {
-    //console.log(req.file);
-    console.log(">>>>Upload success");
-    res.redirect('/profile#/upload');
-    // res.end();
-});
-
 app.get('/api/users/all', function(req, res, next) {
     User.find({}, function(err, users) {
         if (err) return next(err);
@@ -116,40 +93,6 @@ app.put('/api/users/:id', function(req, res, next) {
         });
     });
 });
-
-app.post('/mobile/login', passport.authenticate('local-login'), function(req, res, next) {
-    res.json(req.user);
-});
-
-/*app.post('/mobile/signup', passport.authenticate('local-signup'), function(req, res, next) {
-    var response = {
-        status  : 200,
-        success : 'Successfully Sign up'
-    }
-    res.end(JSON.stringify(response));
-});*/
-app.post('/mobile/signup', function(req, res, next) {
-    var signupUser = req.body;
-    User.findOne({ 'local.email': signupUser.email }, function(err, user) {
-            if (err) 
-                return next(err);
-            if (user) {
-                 res.status(500).send('Email already Exist');
-            } else {
-                var newUser = new User();
-
-                newUser.local.email = signupUser.email;
-                newUser.local.password = newUser.generateHash(signupUser.password);
-
-                newUser.save(function(err) {
-                    if (err)
-                       throw err;
-                     res.status(200).send('Sign up Successfully');
-                });
-            }
-        })
-});
-
 
 app.get('/logout', function(req, res) {
     req.logout();
