@@ -36,10 +36,14 @@ app.get('/logout', function(req, res, next) {
     res.status(200).send('Log Out Successfully');
 });
 
-app.put('/user', isLoggedIn,  function(req, res, next) {
-    req.user.update(req.body,{}, function(err, user) {
+app.put('/users/:user/update', function(req, res, next) {
+    var editedUser = req.body;    
+    User.findById(req.params.user, function(err, user) {
         if (err) return next(err);
-        res.json(user);
+        user.bio = editedUser.bio;
+        user.save(function(err, savedUser) {
+            res.json(savedUser);    
+        });        
     });
 });
 
