@@ -1,8 +1,9 @@
 var express = require('express');
 var app = express.Router();
 var passport = require('passport');
-var User = require('../models/user');
-var Card = require('../models/card');
+var mongoose = require('mongoose');
+var User = mongoose.model('User');
+var Card = mongoose.model('Card');
 
 app.post('/login', passport.authenticate('local-login'), function(req, res, next) {
     res.json(req.user);

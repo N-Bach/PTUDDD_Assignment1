@@ -1,7 +1,9 @@
 var express = require('express');
 var app = express.Router();
 var passport = require('passport');
-var User = require('../models/user');
+var mongoose = require('mongoose');
+//var User = require('../models/user');
+var User = mongoose.model('User');
 
 app.get('/', function(req, res) {
     res.render('index.ejs');

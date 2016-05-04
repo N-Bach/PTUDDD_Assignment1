@@ -1,5 +1,6 @@
 var LocalStrategy = require('passport-local').Strategy;
-var User = require('../models/user');
+var mongoose = require('mongoose');
+var User = mongoose.model('User');
 var passport = require('passport');
 
 

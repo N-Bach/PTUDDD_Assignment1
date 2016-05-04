@@ -1,5 +1,9 @@
-module.exports = {
+var mongoose = require('mongoose');
+var connection = require('./connection')
 
-    'url' : 'mongodb://adminnguyenbach:Garfield123@ds011840.mlab.com:11840/testdatabase' 
-    //mongodb://localhost/     
-};
+mongoose.connect(connection.db_url);
+
+require('../models/card.js');
+require('../models/user.js');
+
+

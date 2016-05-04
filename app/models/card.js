@@ -43,9 +43,23 @@ var cardSchema = new Schema({
         type: String,
         enum: categoryType
     },
-    create_by: {
+    created_by: {
         type: Schema.Types.ObjectId,
         ref: 'User'
+    },
+    review: [{ 
+        type: Schema.Types.ObjectId, 
+        ref: 'Review' 
+    }],
+    limit: {
+        type: Number,
+        min: 1,
+        max: 5
+    },
+    accepted: {
+        type: Number,
+        min: 0,
+        default: 0
     }
 }, { 
     timestamps: true
@@ -56,4 +70,4 @@ cardSchema.methods.upvote = function(cb) {
     this.save(cb);
 }
 
-module.exports = mongoose.model('Card', cardSchema);
+mongoose.model('Card', cardSchema);

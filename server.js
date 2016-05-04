@@ -2,7 +2,6 @@ var express  = require('express');
 var app      = express();
 var path = require('path');
 var port     = process.env.PORT || 3000;
-var mongoose = require('mongoose');
 var passport = require('passport');
 var flash    = require('connect-flash');
 
@@ -11,17 +10,14 @@ var cookieParser = require('cookie-parser');
 var bodyParser   = require('body-parser');
 var session      = require('express-session');
 
-var configDB = require('./app/config/database.js');
+// configuration ===============================================================
+require('./app/config/database'); // config and connect database 
+require('./app/config/passport'); // pass passport for configuration
 
 // routes ======================================================================
-var routeWeb = require('./app/routes/routes.web.js'); // load our routes and pass in our app and fully configured passport
-var routeMobile = require('./app/routes/routes.mobile.js');
+var routeWeb = require('./app/routes/routes.web'); // load our routes and pass in our app and fully configured passport
+var routeMobile = require('./app/routes/routes.mobile');
 
-// configuration ===============================================================
-mongoose.connect(configDB.url); // connect to our database
-
-
-require('./app/config/passport'); // pass passport for configuration
 
 // set up our express application
 app.use(morgan('dev')); // log every request to the console
