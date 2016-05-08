@@ -3,7 +3,9 @@ var connection = require('./connection')
 
 mongoose.connect(connection.db_url);
 
-require('../models/card.js');
-require('../models/user.js');
+require('../models/card');
+require('../models/user');
+require('../models/feedback');
+
 
 
