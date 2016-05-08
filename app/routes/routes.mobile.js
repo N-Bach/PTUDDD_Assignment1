@@ -41,19 +41,11 @@ app.get('/logout', function(req, res, next) {
     res.status(200).send('Log Out Successfully');
 });
 
-app.put('/users/:user/update', function(req, res, next) {
-    var editedUser = req.body;    
-    User.findById(req.params.user, function(err, user) {
-        if (err) return next(err);
-        user.bio = editedUser.bio;
-        user.save(function(err, savedUser) {
-            res.json(savedUser);    
-        });        
-    });
-});
+app.put('/users/:user/update', ctrlUser.updateUser);
 app.get('/users', ctrlUser.getUser);
+app.put('/users/addFollower', ctrlUser.addFollower);
 
-app.param('card', ctrlCard.paramCard);
+app.param('card', isLoggedIn, ctrlCard.paramCard);
 app.post('/cards', ctrlCard.postCard);
 app.put('/cards/:card/upvote', ctrlCard.putUpvoteCard);
 app.get('/cards', ctrlCard.getCard);

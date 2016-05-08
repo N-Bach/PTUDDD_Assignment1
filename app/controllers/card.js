@@ -1,11 +1,21 @@
 var mongoose = require('mongoose');
 var Card = mongoose.model('Card');
+var User = mongoose.model('User');
 
 exports.postCard = function(req, res, next) {
     var cardInfo = req.body;    
-    var newCard = new Card(cardInfo);   
+    var newCard = new Card(cardInfo);
+
     newCard.save(function(err, card) {
         if (err) return next(err);        
+        User.findById(cardInfo.created_by, 
+                function(err, user) {
+            if (err) next(err);
+            user.cards.push(card._id);
+            user.save(function(err) {
+                if (err) next(err);
+            });
+        });
         res.json(card);
     });
 }

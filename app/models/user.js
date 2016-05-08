@@ -29,8 +29,19 @@ var userSchema = mongoose.Schema({
             default: '090111111'
         }
     },
-    image: [String]
-
+    image: [String],
+    cards: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Card'
+    }],
+    followers: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+    }],
+    following: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+    }]
 });
 
 userSchema.methods.generateHash = function(password) {
