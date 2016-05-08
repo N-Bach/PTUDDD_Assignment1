@@ -58,8 +58,8 @@ app.post('/cards', ctrlCard.postCard);
 app.put('/cards/:card/upvote', ctrlCard.putUpvoteCard);
 app.get('/cards', ctrlCard.getCard);
 
-app.get('/feedback', ctrlFeedBack.getFeedBack);
-app.post('/feedback', ctrlFeedBack.postFeedBack);
+app.get('/feedbacks', ctrlFeedBack.getFeedBack);
+app.post('/feedbacks', ctrlFeedBack.postFeedBack);
 
 function isLoggedIn(req, res, next) {
     if (req.isAuthenticated())
