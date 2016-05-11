@@ -59,12 +59,7 @@ passport.use('local-login', new LocalStrategy({
             return done(null, false, req.flash('loginMessage', 'No user found'));
         if (!user.validPassword(password))
             return done(null, false, req.flash('loginMessage', 'Oops! Wrong password.'));
-        user.populate('cards', function(err, newUser) {
-            if (err) return (null, false, 
-                req.flash('loginMessage', 'Something went wrong referencing cards'));
-            return done(null, newUser);        
-        });
-        //return done(null, user);
+        return done(null, user);
     });
 }));
 
