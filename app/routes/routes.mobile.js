@@ -41,9 +41,12 @@ app.get('/logout', function(req, res, next) {
     res.status(200).send('Log Out Successfully');
 });
 
+app.get('/users', ctrlUser.getUsers);
+app.get('/users/:user', ctrlUser.getUser);
+app.get('/users/:user/cards', ctrlUser.getUserCards);
 app.put('/users/:user/update', ctrlUser.updateUser);
-app.get('/users', ctrlUser.getUser);
 app.put('/users/addFollower', ctrlUser.addFollower);
+app.put('/users/removeFollower', ctrlUser.removeFollower);
 
 app.param('card', isLoggedIn, ctrlCard.paramCard);
 app.post('/cards', ctrlCard.postCard);
