@@ -37,8 +37,7 @@ exports.putUpvoteCard = function(req, res, next) {
 
 exports.getCard = function(req, res, next) {
     var query = Card.find()
-        .limit(10)
-        .populate('created_by')
+        .limit(20)        
         .sort('-createdAt');
 
     query.exec(function(err, cards) {
