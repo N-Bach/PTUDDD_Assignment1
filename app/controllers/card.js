@@ -21,18 +21,25 @@ exports.postCard = function(req, res, next) {
 }
 
 exports.putUpvoteCard = function(req, res, next) {    
-    var userid = req.body.userid;    
-    req.card.upvote(function(err,card) {
-        if (err) return next(err);        
-        User.findById(userid, function(err, user) {
+    var userid = req.body.userid;
+    User.findById(userid, function(err, user) {
             if (err) return next(err);
-            user.upvoted.push(card._id);
-            user.save(function(err, saveduser) {
-                if (err) return next(err);
-            });
-        });
-        res.json(req.card);
-    });
+            
+            var index = user.upvoted.indexOf(req.card._id);
+            // check if already upvoted the card            
+            if (index != -1) { 
+                res.send("you upvoted already");
+            } else {
+                user.addUpvotedCard(req.card._id, function(err) {
+                    if (err) return next(err);
+                    req.card.upvote(function(err,card) {
+                        if (err) return next(err);        
+                        req.card.created_by = userid;
+                        res.json(req.card);
+                    });
+                });
+            }
+        });    
 }
 
 exports.getCard = function(req, res, next) {

@@ -83,4 +83,9 @@ userSchema.methods.addTeacher = function(teacherid, cb) {
     this.save(cb);
 }
 
+userSchema.methods.addUpvotedCard = function(cardid, cb) {
+    this.upvoted.push(cardid);
+    this.save(cb);
+}
+
 mongoose.model('User', userSchema);
