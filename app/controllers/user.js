@@ -17,7 +17,7 @@ exports.updateUser = function(req, res, next) {
 
 exports.getUsers = function(req, res, next) {
     var query = User.find()
-        .limit(20)
+        //.limit(20)
         .sort('-createdAt');        
 
     query.exec(function(err, users) {
@@ -27,8 +27,8 @@ exports.getUsers = function(req, res, next) {
 }
 
 exports.getUser = function(req, res, next) {
-    var query = User.findById(req.params.user)
-            .populate('cards');
+    var query = User.findById(req.params.user);
+            //.populate('cards');
 
     query.exec(function(err, user) {
         if (err) return next(err)
