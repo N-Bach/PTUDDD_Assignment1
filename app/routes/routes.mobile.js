@@ -48,7 +48,8 @@ app.put('/users/:user/update', ctrlUser.updateUser);
 app.put('/users/addFollower', ctrlUser.addFollower);
 app.put('/users/removeFollower', ctrlUser.removeFollower);
 
-app.param('card', isLoggedIn, ctrlCard.paramCard);
+//app.param('card', isLoggedIn, ctrlCard.paramCard);
+app.param('card', ctrlCard.paramCard);
 app.post('/cards', ctrlCard.postCard);
 app.put('/cards/:card/upvote', ctrlCard.putUpvoteCard);
 app.get('/cards', ctrlCard.getCard);

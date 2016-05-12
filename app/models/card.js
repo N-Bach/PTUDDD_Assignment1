@@ -7,22 +7,26 @@ var cardSchema = new Schema({
     title: {
         type: String,
         maxlength: 50,
-        trim: true 
+        trim: true,
+        required: true 
     },
     description: {
         type: String,
         maxlength: 500,
-        trim: true
+        trim: true,
+        required: true
     },
     time: {
         type: Date,
         // min: Date.now 
-        default: Date.now
+        default: Date.now,
+        required: true
     },
     place: {
         type: String,
         maxlength: 150,
-        trim: true
+        trim: true,
+        required: true
     },
     upvotes: {
         type: Number,
@@ -41,7 +45,8 @@ var cardSchema = new Schema({
     },
     category: {
         type: String,
-        enum: categoryType
+        enum: categoryType,
+        required: true
     },
     created_by: {
         type: Schema.Types.ObjectId,

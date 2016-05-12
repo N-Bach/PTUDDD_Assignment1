@@ -14,6 +14,10 @@ var NotificationSchema = new Schema({
     for_card: {
         type: Schema.Types.ObjectId,
         ref: 'Card'
+    },
+    to: {
+        type: Schema.Types.ObjectId,
+        ref: 'User'    
     }
 }, { 
     timestamps: true

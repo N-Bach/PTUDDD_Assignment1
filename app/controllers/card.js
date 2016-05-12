@@ -21,8 +21,16 @@ exports.postCard = function(req, res, next) {
 }
 
 exports.putUpvoteCard = function(req, res, next) {    
-    req.card.upvote(function(err) {
-        if (err) return next(err);
+    var userid = req.body.userid;    
+    req.card.upvote(function(err,card) {
+        if (err) return next(err);        
+        User.findById(userid, function(err, user) {
+            if (err) return next(err);
+            user.upvoted.push(card._id);
+            user.save(function(err, saveduser) {
+                if (err) return next(err);
+            });
+        });
         res.json(req.card);
     });
 }

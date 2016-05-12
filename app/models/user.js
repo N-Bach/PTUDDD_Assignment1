@@ -41,6 +41,10 @@ var userSchema = mongoose.Schema({
     following: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
+    }],
+    upvoted: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Card' 
     }]
 });
 
