@@ -65,6 +65,10 @@ var cardSchema = new Schema({
         type: Number,
         min: 0,
         default: 0
+    },
+    student: {
+        type: Schema.Types.ObjectId,
+        ref: 'User'
     }
 }, { 
     timestamps: true

@@ -49,6 +49,14 @@ var userSchema = mongoose.Schema({
     reviews: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Review' 
+    }],
+    students: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'  
+    }],
+    teachers: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'   
     }]
 });
 
@@ -62,6 +70,16 @@ userSchema.methods.validPassword = function(password) {
 
 userSchema.methods.addReview = function(reviewid, cb) {
     this.reviews.push(reviewid);
+    this.save(cb);
+}
+
+userSchema.methods.addStudent = function(studentid, cb) {
+    this.students.push(studentid);
+    this.save(cb);
+}
+
+userSchema.methods.addTeacher = function(teacherid, cb) {
+    this.teachers.push(teacherid);
     this.save(cb);
 }
 

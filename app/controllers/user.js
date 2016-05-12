@@ -2,6 +2,7 @@ var mongoose = require('mongoose');
 var User = mongoose.model('User');
 var Card = mongoose.model('Card');
 var Review = mongoose.model('Review');
+var Notification = mongoose.model('Notification');
 
 exports.updateUser = function(req, res, next) {
     var editedUser = req.body;    
@@ -104,6 +105,26 @@ exports.postReview = function(req, res, next) {
             });        
         });
         res.json(review);
+    });
+}
+
+exports.postPairUp = function(req, res, next) {
+    var noti = new Notification(req.body);    
+    // add new student to teacher user
+    User.findById(noti.to, function(err, user) {
+        user.addStudent(noti.created_by, function(err) {
+            if (err) return next(err);
+        });
+    });
+    // add new teacher to student user
+    User.findById(noti.created_by, function(err, user) {
+        user.addTeacher(noti.to, function(err) {
+            if (err) return next(err);
+        });
+    });
+    noti.save(function(err, notification) {
+        if (err) return next(err);
+        res.json(notification);
     });
 }
 
