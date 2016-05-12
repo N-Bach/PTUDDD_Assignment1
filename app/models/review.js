@@ -5,25 +5,30 @@ var ReviewSchema = new Schema({
     rating: {
         type: Number,
         min:0,
-        max:5
+        max:5,
+        required: true
     },
     title: {
         type: String,
         maxlength: 150,
-        trim: true
+        trim: true,
+        required: true
     },
-    body: {
+    description: {
         type: String,
         maxlength: 500,
-        trim: true
+        trim: true,
+        required: true
     },
     created_by: {
         type: Schema.Types.ObjectId,
-        ref: 'User'
+        ref: 'User',
+        required: true
     },
     for_card: {
         type: Schema.Types.ObjectId,
-        ref: 'Card'
+        ref: 'Card',
+        required: true
     }
 }, { 
     timestamps: true

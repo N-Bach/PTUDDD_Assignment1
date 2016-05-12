@@ -1,6 +1,7 @@
 var mongoose = require('mongoose');
 var User = mongoose.model('User');
 var Card = mongoose.model('Card');
+var Review = mongoose.model('Review');
 
 exports.updateUser = function(req, res, next) {
     var editedUser = req.body;    
@@ -81,6 +82,29 @@ exports.removeFollower = function(req, res, next) {
         });
     });
     res.send('removed follower & following');
+}
+
+exports.postReview = function(req, res, next) {
+    var newreview = new Review(req.body);
+    
+    newreview.save(function(err, review) {
+        if (err) return next(err);
+        // add new review to list of reviews in card
+        Card.findById(review.for_card, function(err, card) {
+            if (err) return next(err);
+            card.addReview(review, function(err) {
+                if (err) return next(err);
+            });
+        });
+        // add new review to list of reviews in user
+        User.findById(review.created_by, function(err, user) {
+            if (err) return next(err);
+            user.addReview(review._id,function(err) {
+                if (err) return next(err);
+            });        
+        });
+        res.json(review);
+    });
 }
 
 

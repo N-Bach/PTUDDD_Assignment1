@@ -47,6 +47,7 @@ app.get('/users/:user/cards', ctrlUser.getUserCards);
 app.put('/users/:user/update', ctrlUser.updateUser);
 app.put('/users/addFollower', ctrlUser.addFollower);
 app.put('/users/removeFollower', ctrlUser.removeFollower);
+app.post('/users/review', ctrlUser.postReview);
 
 //app.param('card', isLoggedIn, ctrlCard.paramCard);
 app.param('card', ctrlCard.paramCard);

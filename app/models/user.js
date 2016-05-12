@@ -45,6 +45,10 @@ var userSchema = mongoose.Schema({
     upvoted: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Card' 
+    }],
+    reviews: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Review' 
     }]
 });
 
@@ -54,6 +58,11 @@ userSchema.methods.generateHash = function(password) {
 
 userSchema.methods.validPassword = function(password) {
     return bcrypt.compareSync(password, this.local.password);
+}
+
+userSchema.methods.addReview = function(reviewid, cb) {
+    this.reviews.push(reviewid);
+    this.save(cb);
 }
 
 mongoose.model('User', userSchema);

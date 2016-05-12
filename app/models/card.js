@@ -52,7 +52,7 @@ var cardSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'User'
     },
-    review: [{ 
+    reviews: [{ 
         type: Schema.Types.ObjectId, 
         ref: 'Review' 
     }],
@@ -73,6 +73,21 @@ var cardSchema = new Schema({
 cardSchema.methods.upvote = function(cb) {
     this.upvotes += 1;
     this.save(cb);
+}
+
+cardSchema.methods.addReview = function(review, cb) {
+    if (!this.reviews) {
+        this.reviews.push(review._id);
+        this.rating = review.rating;
+        this.save(cb);
+    }
+    else {
+        var oldNumber = this.reviews.length;
+        this.reviews.push(review._id);
+        var newRating = ((this.rating * oldNumber) + review.rating)  / (oldNumber+1);
+        this.rating = newRating;
+        this.save(cb);
+    }
 }
 
 mongoose.model('Card', cardSchema);
