@@ -136,11 +136,11 @@ exports.getNotification = function(req, res, next) {
     });
 
     // change noti status to 1 after 3 sec waiting
-    setTimeout(function() {                
+    /*setTimeout(function() {                
         Notification.update({"to": req.params.user, 
             "status": 0}, {"status": 1}, {multi: true},
             function(err, diff) {
                 if (err) return next(err);
         });
-    },3000);
+    },3000);*/
 }
