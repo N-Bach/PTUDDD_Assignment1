@@ -93,8 +93,9 @@ exports.postReview = function(req, res, next) {
         // add new review to list of reviews in card
         Card.findById(review.for_card, function(err, card) {
             if (err) return next(err);
-            card.addReview(review, function(err) {
+            card.addReview(review, function(err, newcard) {
                 if (err) return next(err);
+                res.json(newcard);
             });
         });
         // add new review to list of reviews in user
@@ -104,7 +105,7 @@ exports.postReview = function(req, res, next) {
                 if (err) return next(err);
             });        
         });
-        res.json(review);
+        
     });
 }
 

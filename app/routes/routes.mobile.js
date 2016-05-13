@@ -26,10 +26,10 @@ app.post('/signup', function(req, res, next) {
                 newUser.local.email = signupUser.email;
                 newUser.local.password = newUser.generateHash(signupUser.password);
 
-                newUser.save(function(err) {
+                newUser.save(function(err, saveduser) {
                     if (err)
                        throw err;
-                     res.status(200).send('Sign up Successfully');
+                     res.json(saveduser);
                 });
             }
 
