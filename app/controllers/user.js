@@ -128,4 +128,18 @@ exports.postPairUp = function(req, res, next) {
     });
 }
 
+exports.getNotification = function(req, res, next) {
+    Notification.find({"to": req.params.user, 
+        "status": 0}, function(err, notis) {
+            res.json(notis);
+    });
 
+    // change noti status to 1 after 3 sec waiting
+    setTimeout(function() {                
+        Notification.update({"to": req.params.user, 
+            "status": 0}, {"status": 1}, {multi: true},
+            function(err, diff) {
+                if (err) return next(err);
+        });
+    },3000);
+}
