@@ -23,23 +23,44 @@ exports.postCard = function(req, res, next) {
 exports.putUpvoteCard = function(req, res, next) {    
     var userid = req.params.user;
     User.findById(userid, function(err, user) {
-            if (err) return next(err);
-            
-            var index = user.upvoted.indexOf(req.card._id);
-            // check if already upvoted the card            
-            if (index != -1) { 
-                res.send("you upvoted already");
-            } else {
-                user.addUpvotedCard(req.card._id, function(err) {
-                    if (err) return next(err);
-                    req.card.upvote(function(err,card) {
-                        if (err) return next(err);        
-                        req.card.created_by = userid;
-                        res.json(req.card);
-                    });
-                });
-            }
-        });    
+        if (err) return next(err);
+        
+        var index = user.upvoted.indexOf(req.card._id);
+        // check if already upvoted the card            
+        if (index != -1) { 
+            res.send("you upvoted already");
+        } else {
+            user.addUpvotedCard(req.card._id, function(err) {
+                if (err) return next(err);
+            });
+            req.card.upvote(function(err,card) {
+                if (err) return next(err);        
+                req.card.created_by = userid;
+                res.json(req.card);
+            });
+        }
+    });    
+}
+
+exports.removeUpvote = function(req, res, next) {
+    var userid = req.params.user;
+    User.findById(userid, function(err, user) {
+        if (err) return next(err);
+        var index = user.upvoted.indexOf(req.card._id);
+        if (index == -1) {
+            res.send('You haven\'t upvoted this post');
+        }
+        else {
+            user.removeUpvote(index, function(err) {
+                if (err) return next(err);                
+            });
+            req.card.removeUpvote(function(err, card) {
+                if (err) return next(err);
+                req.card.created_by = userid;
+                res.json(card);
+            });
+        }
+    });
 }
 
 exports.getCard = function(req, res, next) {

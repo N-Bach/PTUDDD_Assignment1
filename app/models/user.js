@@ -88,4 +88,9 @@ userSchema.methods.addUpvotedCard = function(cardid, cb) {
     this.save(cb);
 }
 
+userSchema.methods.removeUpvote = function(cardidIndex, cb) {    
+    this.upvoted.splice(cardidIndex,1);
+    this.save(cb);
+}
+
 mongoose.model('User', userSchema);

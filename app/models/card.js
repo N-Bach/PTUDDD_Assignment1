@@ -79,6 +79,11 @@ cardSchema.methods.upvote = function(cb) {
     this.save(cb);
 }
 
+cardSchema.methods.removeUpvote = function(cb) {
+    this.upvotes -= 1;
+    this.save(cb);
+}
+
 cardSchema.methods.addReview = function(review, cb) {
     if (!this.reviews) {
         this.reviews.push(review._id);
