@@ -21,7 +21,7 @@ exports.postCard = function(req, res, next) {
 }
 
 exports.putUpvoteCard = function(req, res, next) {    
-    var userid = req.body.userid;
+    var userid = req.params.user;
     User.findById(userid, function(err, user) {
             if (err) return next(err);
             

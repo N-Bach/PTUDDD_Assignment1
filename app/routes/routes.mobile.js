@@ -53,7 +53,7 @@ app.post('/users/pairup', ctrlUser.postPairUp);
 //app.param('card', isLoggedIn, ctrlCard.paramCard);
 app.param('card', ctrlCard.paramCard);
 app.post('/cards', ctrlCard.postCard);
-app.put('/cards/:card/upvote', ctrlCard.putUpvoteCard);
+app.put('/cards/:card/:user/upvote', ctrlCard.putUpvoteCard);
 app.get('/cards', ctrlCard.getCard);
 
 app.get('/feedbacks', ctrlFeedBack.getFeedBack);
