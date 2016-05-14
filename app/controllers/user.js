@@ -165,7 +165,7 @@ exports.getNotification = function(req, res, next) {
     },3000);*/
 }
 
-exports.methods.putNotification = function(req, res, next) {
+exports.putNotification = function(req, res, next) {
     Notification.findById(req.params.notification, function(err, noti) {
         if (err) return next(err);
         noti.updateStatus(function(err) {
