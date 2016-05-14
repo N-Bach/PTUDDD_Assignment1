@@ -66,10 +66,10 @@ var cardSchema = new Schema({
         min: 0,
         default: 0
     },
-    student: {
+    students: [{
         type: Schema.Types.ObjectId,
         ref: 'User'
-    }
+    }]
 }, { 
     timestamps: true
 });
@@ -97,6 +97,11 @@ cardSchema.methods.addReview = function(review, cb) {
         this.rating = newRating;
         this.save(cb);
     }
+}
+
+cardSchema.methods.addStudent = function(studentid, cb) {
+    this.students.push(studentid);
+    this.save(cb);
 }
 
 mongoose.model('Card', cardSchema);

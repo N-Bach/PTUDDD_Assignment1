@@ -50,6 +50,7 @@ app.put('/users/removeFollower', ctrlUser.removeFollower);
 app.post('/users/review', ctrlUser.postReview);
 app.post('/users/pairup', ctrlUser.postPairUp);
 app.get('/users/:user/notification', ctrlUser.getNotification);
+app.put('/users/:notification', ctrlUser.putNotification);
 
 //app.param('card', isLoggedIn, ctrlCard.paramCard);
 app.param('card', ctrlCard.paramCard);

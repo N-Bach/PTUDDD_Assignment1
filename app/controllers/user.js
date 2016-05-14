@@ -110,19 +110,39 @@ exports.postReview = function(req, res, next) {
 }
 
 exports.postPairUp = function(req, res, next) {
-    var noti = new Notification(req.body);    
+    var noti = new Notification(req.body);        
+    // add student to student list in cards 
+    Card.findById(noti.for_card, function(err, card) {
+        if (err) return next(err);        
+        if (checkExist(noti.created_by, card.students)) {
+            res.status(400).send('You\'re already a student');
+            return next();
+        }
+        else {
+            card.addStudent(noti.created_by,function(err) {
+                if (err) return next(err);
+            });            
+        }
+    });
     // add new student to teacher user
     User.findById(noti.to, function(err, user) {
-        user.addStudent(noti.created_by, function(err) {
-            if (err) return next(err);
-        });
+        if (err) return next(err);
+        if (!checkExist(noti.created_by, user.students)) {
+            user.addStudent(noti.created_by, function(err) {
+                if (err) return next(err);
+            });
+        } else {return;}
     });
     // add new teacher to student user
     User.findById(noti.created_by, function(err, user) {
-        user.addTeacher(noti.to, function(err) {
-            if (err) return next(err);
-        });
+        if (err) return next(err);
+        if (!checkExist(noti.to, user.teachers)) {
+            user.addTeacher(noti.to, function(err) {
+                if (err) return next(err);
+            });
+        } else {return;}
     });
+    // create new notification
     noti.save(function(err, notification) {
         if (err) return next(err);
         res.json(notification);
@@ -143,4 +163,18 @@ exports.getNotification = function(req, res, next) {
                 if (err) return next(err);
         });
     },3000);*/
+}
+
+exports.methods.putNotification = function(req, res, next) {
+    Notification.findById(req.params.notification, function(err, noti) {
+        if (err) return next(err);
+        noti.updateStatus(function(err) {
+            if (err) return next(err);
+        });
+    });
+} 
+
+var checkExist = function(item, list) {
+    var index = list.indexOf(item);
+    return (index != -1) ? true : false;
 }
