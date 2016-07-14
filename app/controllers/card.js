@@ -20,6 +20,7 @@ exports.postCard = function(req, res, next) {
     });
 }
 
+// Note: user con upvote his/her own card
 exports.putUpvoteCard = function(req, res, next) {
     var userid = req.params.user;
     User.findById(userid, function(err, user) {
@@ -27,7 +28,7 @@ exports.putUpvoteCard = function(req, res, next) {
         
         var index = user.upvoted.indexOf(req.card._id);
         // check if already upvoted the card            
-        if (index != -1) { 
+        if (index !== -1) { 
             res.status(400).send("you upvoted already");
         } else {
             user.addUpvotedCard(req.card._id, function(err) {
@@ -47,7 +48,7 @@ exports.removeUpvote = function(req, res, next) {
     User.findById(userid, function(err, user) {
         if (err) return next(err);
         var index = user.upvoted.indexOf(req.card._id);
-        if (index == -1) {
+        if (index === -1) {
             res.status(400).send('You haven\'t upvoted this post');
         }
         else {

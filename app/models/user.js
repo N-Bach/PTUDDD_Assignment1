@@ -62,7 +62,7 @@ var userSchema = mongoose.Schema({
 
 userSchema.methods.generateHash = function(password) {
     return bcrypt.hashSync(password, bcrypt.genSaltSync(9), null);
-};
+}
 
 userSchema.methods.validPassword = function(password) {
     return bcrypt.compareSync(password, this.local.password);
@@ -73,10 +73,41 @@ userSchema.methods.addReview = function(reviewid, cb) {
     this.save(cb);
 }
 
+userSchema.methods.addFollower = function(followerId, cb) {
+    this.followers.push(followerId);
+    this.save(cb);
+}
+
+userSchema.methods.addFollowing = function(followingId, cb) {
+    this.following.push(followingId);
+    this.save(cb);
+}
+
 userSchema.methods.addStudent = function(studentid, cb) {
     this.students.push(studentid);
     this.save(cb);
 }
+
+
+userSchema.methods.addTeacher = function(teacherid, cb) {
+    this.teachers.push(teacherid);
+    this.save(cb);
+}
+
+userSchema.methods.addUpvotedCard = function(cardid, cb) {
+    this.upvoted.push(cardid);
+    this.save(cb);
+}
+
+userSchema.methods.removeUpvote = function(cardidIndex, cb) {    
+    this.upvoted.splice(cardidIndex,1);
+}    
+
+userSchema.methods.addStudent = function(studentid, cb) {
+    this.students.push(studentid);
+    this.save(cb);
+}
+
 
 userSchema.methods.addTeacher = function(teacherid, cb) {
     this.teachers.push(teacherid);

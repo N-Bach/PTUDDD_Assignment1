@@ -46,19 +46,29 @@ exports.getUserCards = function(req, res, next) {
 exports.addFollower = function(req, res, next) {
     var info = req.body;
     User.findById(info.teacher, function(err, teacher) {
-        teacher.followers.push(info.student);
-        teacher.save(function(err, newteacher) {
-            if (err) next(err);
-        });
+        // check if already a follower
+        if (!checkExist(info.student, teacher.followers)) {
+            teacher.addFollower(info.student, function(err) {
+                if (err) return next(err);
+                User.findById(info.student, function(err, student) {
+                    // check if already following
+                    if (!checkExist(info.teacher, student.following)) {
+                        student.addFollowing(info.teacher, function(err) {
+                            if (err) return next(err);
+                            res.send('added following & followers');
+                        });
+                    }
+                    else { // already following
+                        res.status(400).send('already following');
+                    }
+                });
+            });
+        }
+        else { // already a follower
+            res.status(400).send('already a followers');
+        }
     });
 
-    User.findById(info.student, function(err, student) {
-        student.following.push(info.teacher);
-        student.save(function(err) {
-            if (err) next(err);
-        });
-    });
-    res.send('added follower & following');
 }
 
 exports.removeFollower = function(req, res, next) {
@@ -67,22 +77,27 @@ exports.removeFollower = function(req, res, next) {
         var index = teacher.followers.indexOf(info.student);
         if (index > -1 ) {
             teacher.followers.splice(index, 1);
+            teacher.save(function(err, newteacher) {
+                if (err) next(err);
+                User.findById(info.student, function(err, student) {
+                    var index = student.following.indexOf(info.teacher);
+                    if (index > -1 ) {
+                        student.following.splice(index, 1);
+                        student.save(function(err) {
+                            if (err) next(err);
+                            res.send('removed follower & following');
+                        });
+                     }
+                     else {
+                        res.status(400).send('user doens\'t exist in following list');
+                    }
+                });
+            });
         }
-        teacher.save(function(err, newteacher) {
-            if (err) next(err);
-        });
+        else {
+            res.status(400).send('user doens\'t exist in follower list');
+        }
     });
-
-    User.findById(info.student, function(err, student) {
-        var index = student.following.indexOf(info.teacher);
-        if (index > -1 ) {
-            student.following.splice(index, 1);
-         }
-        student.save(function(err) {
-            if (err) next(err);
-        });
-    });
-    res.send('removed follower & following');
 }
 
 exports.postReview = function(req, res, next) {
@@ -93,19 +108,23 @@ exports.postReview = function(req, res, next) {
         // add new review to list of reviews in card
         Card.findById(review.for_card, function(err, card) {
             if (err) return next(err);
-            card.addReview(review, function(err, newcard) {
-                if (err) return next(err);
-                res.json(newcard);
-            });
+            if (card.created_by.toString() === review.created_by.toString()) {
+                res.send('You canno\'t review your own course');
+            }
+            else {
+                card.addReview(review, function(err, newcard) {
+                    if (err) return next(err);
+                    // add new review to list of reviews in user
+                    User.findById(review.created_by, function(err, user) {
+                        if (err) return next(err);
+                        user.addReview(review._id,function(err) {
+                            if (err) return next(err);
+                        });        
+                    });
+                    res.json(newcard);
+                });
+            }
         });
-        // add new review to list of reviews in user
-        User.findById(review.created_by, function(err, user) {
-            if (err) return next(err);
-            user.addReview(review._id,function(err) {
-                if (err) return next(err);
-            });        
-        });
-        
     });
 }
 
@@ -174,7 +193,9 @@ exports.putNotification = function(req, res, next) {
     });
 } 
 
+// if exist in list return true
+// else return false
 var checkExist = function(item, list) {
     var index = list.indexOf(item);
-    return (index != -1) ? true : false;
+    return (index !== -1) ? true : false;
 }
