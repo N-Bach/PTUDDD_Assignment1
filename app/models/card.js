@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
-var categoryType = 'English Japanese German Chinese French Finland Vietnamese Spanish'.split(' ');
+var categoryType = 'English Japanese German Chinese French Finland Vietnamese Spanish Russian Korean'.split(' ');
 
 var cardSchema = new Schema({
     title: {
